@@ -1,10 +1,11 @@
-#!/usr/bin/ruby
+
 
 require "mtg_sdk"
 require "json"
 
 
 module Cube
+	attr_reader :cardnames
 
 	def self.cardnames()
 
@@ -29,7 +30,7 @@ module Cube
 
 		cardnames = []
 
-		# TODO Optimize with File.foreach?
+		
 		File.open(filename).each do |line|
 			line.strip!
 			if line.empty?
@@ -63,7 +64,7 @@ module Cube
 				Dir.mkdir("cache/")
 			end
 
-			print "Downloading #{cardname}... \t"
+			print "Fetching #{cardname}... \t"
 
 			if !cardname.include?("'")
 				cardname = "\"#{cardname}\""
@@ -76,19 +77,48 @@ module Cube
 
 			fail if results.nil? || results.empty?
 
-			# TODO Choose which result to take.
+
 			card = results[0]
 
 			File.open(filename, 'w') do |line|
 				line.puts card.to_json
 			end
 
-			print "OK\n"
+			print "Successfully pulled from API\n"
 
 			cards << JSON.parse(card.to_json)
 		end
 
 		return cards
 	end
+
+	# def generate_packs(set, format)
+	# 	packs = []
+	# 	Card.uncached do
+	# 	  if format == "draft"
+	# 		24.times {packs.push(generate_booster(set))}
+	# 	  else
+	# 		6.times {packs.concat(generate_booster(set))}
+	# 	  end
+	# 	end
+	# 	packs
+	# end
+	
+	# def generate_booster(set)
+	# 	pack = []
+	# 	num = rand(1..8)
+	
+	# 	if num === 1
+	# 	  rare = Card.joins(:set).where(sets: { code: set }).where(rarity: "Mythic").order("RAND()").limit(1)
+	# 	else
+	# 	  rare = Card.joins(:set).where(sets: { code: set }).where(rarity: "Rare").order("RAND()").limit(1)
+	# 	end
+	
+	# 	uncommon = Card.joins(:set).where(sets: { code: set }).where(rarity: "Uncommon").order("RAND()").limit(3)
+	# 	common = Card.joins(:set).where(sets: { code: set }).where(rarity: "Common").where.not("cards.name LIKE ?", "%Guildgate%").order("RAND()").limit(10)
+	# 	land = Card.joins(:set).where(sets: { code: set }).where("cards.name LIKE ?", "%Guildgate%").order("RAND()").limit(1)
+	
+	# 	pack.concat(rare, uncommon, common, land)
+	# end
 
 end

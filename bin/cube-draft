@@ -1,10 +1,13 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
-require 'mtg_sdk'
-require "json"
-require "./lib/cli.rb"
-require "./lib/cube.rb"
+require_relative "../config/environment"
 
-cards = Cube::cards()
+# require 'mtg_sdk'
+# require "json"
+# require_relative "./lib/cli.rb"
+# require_relative "./lib/cube.rb"
+# cards = Cube::cards()
 
-Cube::CLI.new.call
+Cube::CLI.new.start
+
+# Cube::API.new.get_card_data
