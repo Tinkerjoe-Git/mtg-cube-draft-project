@@ -1,0 +1,10 @@
+#!/usr/bin/ruby
+
+require 'mtg_sdk'
+require "json"
+require "./lib/cli.rb"
+require "./lib/cube.rb"
+
+cards = Cube::cards()
+
+Cube::CLI.new.call
