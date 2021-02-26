@@ -8,6 +8,14 @@ require_relative "../config/environment"
 # require_relative "./lib/cube.rb"
 # cards = Cube::cards()
 
+
+
 Cube::CLI.new.start
 
 # Cube::API.new.get_card_data
+# Cube::Card.new(card_array)
+## look at which instance variable we want to store in an @@all.
+
+
+
+

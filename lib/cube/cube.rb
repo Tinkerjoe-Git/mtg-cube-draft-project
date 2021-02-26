@@ -10,16 +10,16 @@ module Cube
 	def self.cardnames()
 
 		filename = "data/cube.txt"
-
+		## This method may be trimmable overall, fail-case only if cube.txt won't load.
 		if not File.file?(filename)
 
 			if not Dir.exist?("data/")
 				Dir.mkdir("data/")
 			end
 
-			cardnames = ["Yoked Ox", "Inspired Charge", "Scroll Thief",
-				"Divination", "Ravenous Rats", "Disentomb", "Furnace Whelp",
-				"Lightning Strike", "Centaur Courser", "Rampant Growth"]
+			cardnames = ["Oko, Thief of Crowns", "Once Upon a Time", "Uro, Titan of Nature's Wrath",
+				"Faithless Looting", "Mox Opal", "Entomb", "Skullclamp",
+				"Lightning Bolt", "Hogaak The Arisen Necropolis", "Mana Leak"]
 
 			File.open(filename, "w") do |f|
 				f.puts(cardnames)
@@ -92,7 +92,9 @@ module Cube
 		return cards
 	end
 
-	# def generate_packs(set, format)
+	
+	## generate_packs('ktk', draft)  = viable format
+	# def generate_packs(set, format)  
 	# 	packs = []
 	# 	Card.uncached do
 	# 	  if format == "draft"
