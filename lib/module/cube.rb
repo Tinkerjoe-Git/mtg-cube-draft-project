@@ -1,0 +1,2 @@
+module Cube
+end

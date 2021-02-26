@@ -2,19 +2,22 @@
 
 require_relative "../config/environment"
 
-# require 'mtg_sdk'
-# require "json"
-# require_relative "./lib/cli.rb"
-# require_relative "./lib/cube.rb"
-# cards = Cube::cards()
+# here=Cube::API.new
+# here.get_card_data
 
+# Cube::API.new.create_card_objects
 
-
-Cube::CLI.new.start
+Cube::CLI.new.menu
 
 # Cube::API.new.get_card_data
+
 # Cube::Card.new(card_array)
-## look at which instance variable we want to store in an @@all.
+
+
+
+
+
+
 
 
 

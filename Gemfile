@@ -7,5 +7,6 @@ gem 'mtg_sdk'
 gem 'json'
 gem 'pry'
 gem 'httparty'
+gem 'colorize'
 
 #source_root File.expand_path('../templates', __FILE__) ##break incase of emergency
