@@ -8,6 +8,10 @@ class Cube::Player
 
     end
 
+    def look_at_library
+        @player.library
+    end
+
 
     def put_cards_in_hand(count, deck)
         @hand = deck.pop(count)
@@ -19,7 +23,7 @@ class Cube::Player
         
         @hand.each.with_index(1) do |card, index|
             
-            puts "#{index}. #{card["name"]}"
+            puts "#{index}. #{card.name}"
             
         end
 

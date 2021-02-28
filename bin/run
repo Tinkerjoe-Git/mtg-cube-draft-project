@@ -7,7 +7,7 @@ require_relative "../config/environment"
 
 # Cube::API.new.create_card_objects
 
-Cube::CLI.new.menu
+Cube::CLI.new.start
 
 # Cube::API.new.get_card_data
 

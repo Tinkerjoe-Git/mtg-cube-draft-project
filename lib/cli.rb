@@ -1,77 +1,61 @@
-
-
+require 'pry'
 class Cube::CLI
 
     def initialize
-        # Cube::API.new.create_card_objects
         
         Cube::API.new.get_card_data
         Cube::Player.new
         puts "Fetching Card data...."
-        display_cards
     end
 
     def display_cards
         Cube::Card.all.each.with_index(1) do |card, index|
-            puts "#{index}. #{card.get_card_data}."
+            puts "#{index}. #{card.name}."
         end
     end
 
-    def show_cards(input)
-        card_object = Cube::Card.all[@input.to_i -1]
-        puts "Mana cost: #{card_object.mana_cost}".colorize(:blue)
-        puts "Colors: #{card_object.colors}"
-        puts "Type: #{card_object.types}"
-        puts "Text: #{card_object.text}"
-        puts "----------------------------".colorize(red)
-        puts "Type back to go back to the menu".colorize(green)
+    def card_lookup!
+        # 1. Show them all the cards
+        display_cards
+
+        # 2. Get which card number they want to lookup
+        input=gets.chomp.downcase
+
+        # 3. Lookup the card
+        index = input.to_i - 1
+        card = Cube::Card.all[index]
+
+        # 4. Show them the card
+        puts "Text: #{card.text}"
+        puts "Type: #{card.types}"
+        puts "Cmc: #{card.cmc}"
+
+        if card.colors == ["Red"]
+            puts "Colors: #{card.colors} ".colorize(:red)
+        elsif card.colors == ["Green"]
+            puts "Colors: #{card.colors} ".colorize(:green)
+        elsif card.colors == ["White"]
+            puts "Colors: #{card.colors} ".colorize(:white)
+        elsif card.colors == ["Blue"]
+            puts "Colors: #{card.colors} ".colorize(:blue)
+        elsif card.colors == ["Black"]
+            puts "Colors: #{card.colors} ".colorize(:black).colorize(:background => :white)
+        elsif card.colors == []
+            puts "Colors: #{card.colors} ".colorize(:brown).colorize(:background => :grey)
+            puts "Colorless"
+        else 
+            puts "Colors: #{card.colors} ".colorize(:light_blue).colorize(:background => :black)
+            puts "Multicolored"
+        end
+
+        puts "----------------------------".colorize(:red)
     end
 
-        
     def start
-        
-        ##Not sure how much I like this menu at all, may end up scrapping it.
-        puts "Welcome to the draft table, wizard(s)."
-        puts "How many players at the table? enter 'one', 'two', 'four', 'six', 'eight'."
-        input=gets.chomp.downcase  ##to_i
+        input = ""
         while input!="exit" do
-            case input
-            when "one"
-                puts "Okay."
-                loop_back
-            when "confirm"
-                loop_back
-            when "two"
-                puts "Okay"
-                loop_back
-            when "four"
-                puts "Okay"
-                loop_back
-            when "six"
-                puts "Okay"
-                loop_back
-            when "eight"
-                puts "Okay"
-                loop_back
-            end
-        end
-    end
-
-    def menu
-
-        
-
-        @cards = display_cards
-
-        @cards
-
-
-        # @cards = Cube::API.new.create_card_objects(card_array)
-        
-
-        input=gets.strip.downcase
-
-        while input!="exit" do
+            # 1. Show user their options.
+            puts "Welcome to the table Wizard, lets draft!"
             puts "To shuffle up the cube, enter 'shuffle'"
             puts "To generate this sessions cube, enter 'generate cube'."
             puts "To get a pack enter, 'generate pack'."
@@ -79,9 +63,14 @@ class Cube::CLI
             ## present player with a menu of options, pass card, look at library array, receive the next hand?
             puts "To pass your current hand enter 'pass hand'"
             puts "To look at your current library of cards enter, 'library'"
+            puts "To lookup a specific card enter, 'lookup card'"
             puts "To quit, type 'exit'."
             puts "What would you like to do?"
+
+            # 2. Get input from user.
             input=gets.strip.downcase
+
+            # 3. Perform chosen option.
             case input
             when "shuffle"
                 shuffle!
@@ -93,6 +82,8 @@ class Cube::CLI
                 pass_hand
             when "library"
                 look_at_library
+            when "lookup card"
+                card_lookup!
             end
         end
     end
@@ -102,6 +93,7 @@ class Cube::CLI
     end
 
     def shuffle!(n=7)
+        @cards = display_cards
 
         n.times { @cards.shuffle! }
             ## no return statement on shuffle method currently 
@@ -206,7 +198,7 @@ class Cube::CLI
             if input == "exit"
                 exit
             elsif @input == "menu"
-                menu
+                start
             end
             @input
         end
