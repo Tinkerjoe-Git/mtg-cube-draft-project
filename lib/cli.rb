@@ -58,10 +58,8 @@ class Cube::CLI
             puts "Welcome to the table Wizard, lets draft!"
             puts "To shuffle up the cube, enter 'shuffle'"
             puts "To generate this sessions cube, enter 'generate cube'."
-            puts "To get a pack enter, 'generate pack'."
             ## a new menu for players hands, ask user which card they would like to add to their library
             ## present player with a menu of options, pass card, look at library array, receive the next hand?
-            puts "To pass your current hand enter 'pass hand'"
             puts "To look at your current library of cards enter, 'library'"
             puts "To lookup a specific card enter, 'lookup card'"
             puts "To quit, type 'exit'."
@@ -81,9 +79,11 @@ class Cube::CLI
             when "pass hand"
                 pass_hand
             when "library"
-                look_at_library
+                player.look_at_library
             when "lookup card"
                 card_lookup!
+            when "exit"
+                input == "exit"
             end
         end
     end
@@ -115,7 +115,7 @@ class Cube::CLI
         answer = gets.chomp
         case answer
         when "y"
-            menu
+            start
         when "n"
             ## Figure out if you want to expand upon this, or is it fine
             puts "Alright then, what do you want to do"
@@ -165,14 +165,10 @@ class Cube::CLI
             players.each do |player|
 
                 player.put_cards_in_hand(number_of_cards_per_player_per_round, deck_for_session)
-                number_of_rounds -= 1
-                if number_of_rounds == 0
-                    puts "The draft session is complete, go on and create your limited deck or we can draft again!"
-                    loop_back
-                end
-
-
             end
+
+
+
 
             # keep doing that until all cards are taken
             number_of_cards_per_player_per_round.times do
@@ -186,6 +182,8 @@ class Cube::CLI
                 pass_hand(players)
                 puts "You've passed the hand, here comes the next one."
             end
+            puts "The draft session is complete, go on and create your limited deck or we can draft again!"
+                loop_back
         end
 
         players.each do |player|
@@ -197,6 +195,8 @@ class Cube::CLI
             @input = gets.chomp.downcase
             if input == "exit"
                 exit
+            elsif @input == "lookup card"
+                card_lookup!
             elsif @input == "menu"
                 start
             end
