@@ -1,17 +1,13 @@
 #!/usr/bin/env ruby
 
-require_relative "../bin/config/environment.rb"
+require_relative "../config/environment.rb"
 
-# here=Cube::API.new
-# here.get_card_data
 
-# Cube::API.new.create_card_objects
 
 Cube::CLI.new.start
 
-# Cube::API.new.get_card_data
 
-# Cube::Card.new(card_array)
+
 
 
 

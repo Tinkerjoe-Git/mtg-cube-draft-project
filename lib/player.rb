@@ -1,15 +1,14 @@
 class Cube::Player
     attr_accessor :hand
-    attr_reader :library, :name
+    attr_reader :library
 
     def initialize
         @library = []
-        @name = "Player"
 
     end
 
     def look_at_library
-        @player.library
+        puts @library
     end
 
 
@@ -33,6 +32,6 @@ class Cube::Player
         choosen_card = @hand.slice!(index)
 
         # ...add it to library
-        @library << choosen_card
+        @library << choosen_card.name
     end
 end

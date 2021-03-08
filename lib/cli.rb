@@ -1,4 +1,4 @@
-require 'pry'
+
 class Cube::CLI
 
     def initialize
@@ -30,7 +30,7 @@ class Cube::CLI
         puts "Type: #{card.types}"
         puts "Cmc: #{card.cmc}"
 
-        if card.colors == ["Red"]
+        if card.colors == ["Red"] 
             puts "Colors: #{card.colors} ".colorize(:red)
         elsif card.colors == ["Green"]
             puts "Colors: #{card.colors} ".colorize(:green)
@@ -60,7 +60,6 @@ class Cube::CLI
             puts "To generate this sessions cube, enter 'generate cube'."
             ## a new menu for players hands, ask user which card they would like to add to their library
             ## present player with a menu of options, pass card, look at library array, receive the next hand?
-            puts "To look at your current library of cards enter, 'library'"
             puts "To lookup a specific card enter, 'lookup card'"
             puts "To quit, type 'exit'."
             puts "What would you like to do?"
@@ -74,12 +73,6 @@ class Cube::CLI
                 shuffle!
             when "generate cube"
                 generate_cube
-            when "generate pack"
-                generate_pack
-            when "pass hand"
-                pass_hand
-            when "library"
-                player.look_at_library
             when "lookup card"
                 card_lookup!
             when "exit"
@@ -88,15 +81,11 @@ class Cube::CLI
         end
     end
 
-    def look_at_library
-        @player.library
-    end
-
     def shuffle!(n=7)
         @cards = display_cards
 
         n.times { @cards.shuffle! }
-            ## no return statement on shuffle method currently 
+            
         puts "All shuffled up #{n} times."
     end
 
@@ -182,14 +171,14 @@ class Cube::CLI
                 pass_hand(players)
                 puts "You've passed the hand, here comes the next one."
             end
+            players.each do |player|
+                player.look_at_library
+            end
             puts "The draft session is complete, go on and create your limited deck or we can draft again!"
-                loop_back
+            loop_back
         end
 
-        players.each do |player|
-            puts @player.name
-            puts @player.library
-        end
+
 
         def user_input
             @input = gets.chomp.downcase
