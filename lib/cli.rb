@@ -171,6 +171,7 @@ class Cube::CLI
                 pass_hand(players)
                 puts "You've passed the hand, here comes the next one."
             end
+            puts "Here is your decklist!"
             players.each do |player|
                 player.look_at_library
             end
