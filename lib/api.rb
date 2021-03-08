@@ -1,5 +1,4 @@
-# require 'pry'
-# require 'mtg_sdk'
+
 class Cube::API
 
 

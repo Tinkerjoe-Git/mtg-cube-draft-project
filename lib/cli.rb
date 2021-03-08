@@ -1,9 +1,14 @@
 
 class Cube::CLI
 
+    ## Class method that takes in an arg, filters through display cards and gives back all the card objects of the specific type.
+    
+
+
     def initialize
         
         Cube::API.new.get_card_data
+        binding.pry
         Cube::Player.new
         puts "Fetching Card data...."
     end
@@ -109,7 +114,7 @@ class Cube::CLI
             ## Figure out if you want to expand upon this, or is it fine
             puts "Alright then, what do you want to do"
         else
-            start
+            exit
         end
     end
             
@@ -171,7 +176,7 @@ class Cube::CLI
                 pass_hand(players)
                 puts "You've passed the hand, here comes the next one."
             end
-            puts "Here is your decklist!"
+            puts "Here is your decklist!".colorize(:green).colorize(:background => :white)
             players.each do |player|
                 player.look_at_library
             end
